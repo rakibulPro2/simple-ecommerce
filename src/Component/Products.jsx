@@ -1,15 +1,18 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export default function Products({finalProducts}) {
-
+export default function Products({ finalProducts }) {
   let item = finalProducts.map((v, i) => {
     return <ProductItem v={v} key={i} />;
   });
 
   return (
     <div className="grid grid-cols-3 place-items-center gap-4">
-        {item}
+      {item.length >= 1 ? (
+        item
+      ) : (
+        <h4 className="text-[22px] font-[500]">No data found</h4>
+      )}
     </div>
   );
 }
