@@ -1,20 +1,9 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 
-export default function Products() {
-  let [products, setProducts] = useState([]);
+export default function Products({finalProducts}) {
 
-  // get products
-  useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products")
-      .then((res) => res.data)
-      .then((finalRes) => {
-        setProducts(finalRes.products);
-      });
-  }, []);
-
-  let item = products.map((v, i) => {
+  let item = finalProducts.map((v, i) => {
     return <ProductItem v={v} key={i} />;
   });
 

@@ -7,14 +7,31 @@ import { useEffect, useState } from 'react';
 
 function App() {
   let [finalCategory, setFinalCategory] = useState([])
+  let [finalProducts, setFinalProducts] = useState([]);
+  
 
   // get Category
-  useEffect(()=>{
+  let getCategory = () =>{
     axios.get('https://dummyjson.com/products/categories')
     .then((res)=>res.data)
     .then((finalRes) => {
       setFinalCategory(finalRes)
     })
+  }
+
+  // get products 
+  let getProducts = () =>{
+    axios
+      .get("https://dummyjson.com/products")
+      .then((res) => res.data)
+      .then((finalRes) => {
+        setFinalProducts(finalRes.products);
+        console.log(finalRes.products)
+      });
+  }
+  useEffect(()=>{
+    getCategory()
+    getProducts()
 
   }, [])
   return (
@@ -27,7 +44,7 @@ function App() {
               <Category finalCategory= {finalCategory}/>
             </div>
             <div className='mt-[70px] ml-3'>
-              <Products/>
+              <Products finalProducts={finalProducts}/>
             </div>
           </div>
         </div>
