@@ -1,56 +1,65 @@
-import logo from './logo.svg';
-import './App.css';
-import Category from './Component/Category';
-import Products from './Component/Products';
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+import logo from "./logo.svg";
+import "./App.css";
+import Category from "./Component/Category";
+import Products from "./Component/Products";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function App() {
-  let [finalCategory, setFinalCategory] = useState([])
+  let [finalCategory, setFinalCategory] = useState([]);
   let [finalProducts, setFinalProducts] = useState([]);
-  
+  let [catName, setCatName] = useState("");
 
   // get Category
-  let getCategory = () =>{
-    axios.get('https://dummyjson.com/products/categories')
-    .then((res)=>res.data)
-    .then((finalRes) => {
-      setFinalCategory(finalRes)
-    })
-  }
+  let getCategory = () => {
+    axios
+      .get("https://dummyjson.com/products/categories")
+      .then((res) => res.data)
+      .then((finalRes) => {
+        setFinalCategory(finalRes);
+      });
+  };
 
-  // get products 
-  let getProducts = () =>{
+  // get products
+  let getProducts = () => {
     axios
       .get("https://dummyjson.com/products")
       .then((res) => res.data)
       .then((finalRes) => {
         setFinalProducts(finalRes.products);
-        console.log(finalRes.products)
       });
-  }
-  useEffect(()=>{
-    getCategory()
-    getProducts()
+  };
+  useEffect(() => {
+    getCategory();
+    getProducts();
+  }, []);
 
-  }, [])
+  // for specific category click
+  useEffect(() => {
+    if (catName !== "") {
+      axios
+        .get(`https://dummyjson.com/products/category/${catName}`)
+        .then((res) => res.data)
+        .then((finalRes) => {
+          setFinalProducts(finalRes.products)
+        });
+    }
+  }, [catName]);
   return (
     <>
-      <div className='py-[40px]'>
-        <div className='max-w-[1220px] mx-auto'>
-          <h2 className='text-[40px] font-bold text-center'>Our Products</h2>
-          <div className='grid grid-cols-[30%_auto]'>
+      <div className="py-[40px]">
+        <div className="max-w-[1220px] mx-auto">
+          <h2 className="text-[40px] font-bold text-center">Our Products</h2>
+          <div className="grid grid-cols-[30%_auto]">
             <div>
-              <Category finalCategory= {finalCategory}/>
+              <Category finalCategory={finalCategory} setCatName={setCatName} />
             </div>
-            <div className='mt-[70px] ml-3'>
-              <Products finalProducts={finalProducts}/>
+            <div className="mt-[70px] ml-3">
+              <Products finalProducts={finalProducts} />
             </div>
           </div>
         </div>
-
       </div>
-    
     </>
   );
 }
