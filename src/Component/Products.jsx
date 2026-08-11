@@ -19,11 +19,11 @@ export default function Products({ finalProducts }) {
 
 function ProductItem({ v }) {
   return (
-    <div className="shadow-lg text-center px-2 py-4">
+    <div className="shadow-lg text-center px-3 py-5">
       <img src={`${v.images[0]}`} />
       <h3 className="text-[18px] font-[500] mt-4">{v.title}</h3>
       <div className="flex justify-between items-center mt-3">
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-2 items-center">
           <b>{v.price}</b>
           <img
             className="w-[15px] h-[15px]"
